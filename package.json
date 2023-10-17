@@ -1,0 +1,25 @@
+{
+  "name": "pnp-bin",
+  "packageManager": "yarn@3.6.3",
+  "type": "module",
+  "bin": "./pnp-bin.js",
+  "dependencies": {
+    "@yarnpkg/fslib": "^3.0.0-rc.51",
+    "@yarnpkg/libzip": "^3.0.0-rc.51"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.4",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3"
+  },
+  "eslintConfig": {
+    "extends": ["eslint:recommended", "prettier"],
+    "root": true
+  },
+  "eslintIgnore": [".yarn/*"],
+  "scripts": {
+    "build": "esbuild pnp-bin.js --platform=node --bundle --target=node18 --minify=true --tree-shaking=true --outfile=out.cjs",
+    "clean": "rm out.cjs"
+  }
+}
