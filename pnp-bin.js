@@ -3,32 +3,32 @@
 import path from "path";
 import { PnpBin } from "./index.js";
 
-const targetPnpPath = path.resolve(process.cwd(), process.argv[2]);
-const pnpBin = PnpBin(targetPnpPath);
+function usage() {}
 
-if (!targetPnpPath) {
-  console.log(
-    `Usage: ${process.argv[0]} <path to .pnp.cjs file> [name of binary]`,
+if (!process.argv[2]) {
+  console.error(
+    `Usage: ${process.argv[1]} <path to target .pnp.cjs file> [name of binary to locate]`,
   );
   process.exit(1);
 }
 
+const targetPnpPath = path.resolve(process.cwd(), process.argv[2]);
+const pnpBin = PnpBin(targetPnpPath);
+
 if (process.argv[3]) {
-  pnpBin.findBinary(process.argv[3]).then((path) => {
-    if (path) {
-      console.log(path);
-    } else {
-      console.error(`Could not find binary '${process.argv[3]}' in package`);
-      process.exit(1);
-    }
-  });
+  const path = pnpBin.findBinary(process.argv[3]);
+  if (path) {
+    console.log(path);
+  } else {
+    console.error(`Could not find binary '${process.argv[3]}' in package`);
+    process.exit(1);
+  }
 } else {
-  pnpBin.listBinaries().then((binaries) =>
-    console.log(
-      binaries
-        .map((b) => b[0])
-        .sort()
-        .join("\n"),
-    ),
+  const binaries = pnpBin.listBinaries();
+  console.log(
+    binaries
+      .map((b) => path.basename(b[0]))
+      .sort()
+      .join("\n"),
   );
 }

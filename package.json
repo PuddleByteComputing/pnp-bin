@@ -15,11 +15,15 @@
   },
   "eslintConfig": {
     "extends": ["eslint:recommended", "prettier"],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2020
+    },
     "root": true
   },
   "eslintIgnore": [".yarn/*"],
   "scripts": {
-    "build": "esbuild pnp-bin.js --platform=node --bundle --target=node18 --minify=true --tree-shaking=true --outfile=out.cjs",
+    "build": "esbuild pnp-bin.js --platform=node --bundle --target=node18 --tree-shaking=true --minify=true --outfile=out.cjs",
     "clean": "rm out.cjs"
   }
 }
