@@ -2,8 +2,8 @@ import { PosixFS } from "@yarnpkg/fslib";
 import { ZipOpenFS } from "@yarnpkg/libzip";
 import path from "path";
 
-export function PnpBin(targetPnpPath) {
-  const pnp = require(targetPnpPath);
+export async function PnpBin(targetPnpPath) {
+  const { default: pnp } = await import(path.resolve(targetPnpPath));
   const zipOpenFs = new ZipOpenFS();
   const crossFs = new PosixFS(zipOpenFs);
 

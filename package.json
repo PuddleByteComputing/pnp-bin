@@ -23,7 +23,7 @@
   },
   "eslintIgnore": [".yarn/*"],
   "scripts": {
-    "build": "esbuild pnp-bin.js --platform=node --bundle --target=node18 --tree-shaking=true --minify=true --outfile=out.cjs",
-    "clean": "rm out.cjs"
+    "build": "esbuild pnp-bin.js --platform=node --bundle --target=node8 --tree-shaking=true --minify=true --outfile=dist/pnp-bin.minified.js",
+    "clean": "rm -rf dist"
   }
 }
