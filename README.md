@@ -51,4 +51,29 @@ extension on the file.
 
 ## Library
 
-pnp-bin exports two functions, `findBinary` and `listBinary`.
+pnp-bin exports an async constructor, PnpBin, which takes the full
+path to the `.pnp.cjs` file of the project you're inspecting
+
+```js
+import { PnpBin } from "pnp-bin"
+
+pnpBin = await PnpBin(targetPnpPath)
+
+const binaries = pnpBin.listBinaries()
+const binaryPath = pnpBin.findBinary('some-bin')
+```
+
+the resolved Promise is an object with two functions
+
+### listBinaries()
+
+Returns an array of two-element arrays; the first element is
+the name of the bin, the second is the full path to it.
+
+### findBinary(binName)
+
+Returns the full path to the bin specified, if found.  This will
+be a little quicker than doing a listBinaries() and then picking
+your bin out of the list, because it stops looking into zip files
+as soon as it finds a match, and also checks any package matching
+binName first.
